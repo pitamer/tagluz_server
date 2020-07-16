@@ -1,0 +1,80 @@
+var express = require("express");
+var router = express.Router();
+var mongoose = require("mongoose");
+var dateFns = require('date-fns');
+var Day = require("../schemas/daySchema");
+
+
+// req = request
+// res = response
+// next/error = go next (in backend) (error)
+
+router.get("/getAll", (req, res, next) => {
+  Day.find({}).then((days) => {
+      res.status(200).send(days)
+  }, (err) => next(err)).catch((err) => console.log(err))
+});
+
+router.put("/addShift", (req, res, next) => {
+
+  const startOfDay = dateFns.startOfDay(new Date(req.body.day));
+  const endOfDay = dateFns.endOfDay(new Date(req.body.day));
+
+  Day.findOneAndUpdate({date: {$gte: startOfDay, $lte: endOfDay}} 
+    , {$push: {shifts: req.body.newShift}, date: startOfDay}, {upsert: true, setDefaultsOnInsert: true})
+    .then((day) => {
+      Day.find({}).then((days) => {
+        res.status(200).send(days)
+      }, (err) => next(err)).catch((err) => console.error(err))
+    }, (err) => next(err)).catch((err) => console.error(err))
+});
+
+router.put("/addMessage", (req, res, next) => {
+
+  const startOfDay = dateFns.startOfDay(new Date(req.body.day));
+  const endOfDay = dateFns.endOfDay(new Date(req.body.day));
+
+  Day.findOneAndUpdate({date: {$gte: startOfDay, $lte: endOfDay}} 
+    , {$push: {messages: req.body.newMessage}, date: startOfDay}, {upsert: true, setDefaultsOnInsert: true})
+    .then((day) => {
+      Day.find({}).then((days) => {
+        res.status(200).send(days);
+      }, (err) => next(err)).catch((err) => console.error(err))
+    }, (err) => next(err)).catch((err) => console.error(err))
+});
+
+router.put("/deleteShift", (req, res, next) => {
+  console.log(req.body.day);
+  console.log(req.body.user);
+  const startOfDay = dateFns.startOfDay(new Date(req.body.day));
+  const endOfDay = dateFns.endOfDay(new Date(req.body.day));
+
+  Day.findOneAndUpdate({date: {$gte: startOfDay, $lte: endOfDay}},
+    {$pull: {shifts: {user: req.body.user}}})
+  .then(day => {
+    Day.find({}).then((days) => {
+      res.status(200).send(days);
+    }, (err) => next(err)).catch((err) => console.error(err))
+  }, (err) => next(err)).catch((err) => console.error(err))
+})
+
+
+// delShift: action((state, shiftPayload) => {
+//   const user = shiftPayload.user;
+//   const day = shiftPayload.day;
+
+//   for (let dbDay of state.data) {
+//     if (dateFns.isSameDay(dbDay.date, day)) {
+//       dbDay.shifts = dbDay.shifts.filter((shift) => shift.user !== user);
+//     }
+//   }
+// }),
+
+
+router.post("/mkDay", (req, res, next) => {
+    Day.create(req.body).then((day) => {
+        res.status(200).send(day)
+    }, (err) => next(err)).catch((err) => console.log(err))
+  });
+
+module.exports = router
