@@ -4,8 +4,8 @@ var Schema = mongoose.Schema;
 var daySchema = new Schema({
     date: Date,
     shifts: [{
-        startTime: Number,
-        endTime: Number,
+        startTime: Date,
+        endTime: Date,
         isAllDay: Boolean,
         user: String,
     }],
