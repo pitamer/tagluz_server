@@ -22,7 +22,7 @@ router.get("/getUser/:user", (req, res, next) => {
 });
 
 router.get('/checkUser/:user/:pass', (req, res, next) => {
-  if (req.params.pass === '1234') {
+  if (req.params.pass === 'Data2020') {
     User.findOne({name: req.params.user}).then((user) => {
       if (user !== null) {
         res.status(200).send(true);

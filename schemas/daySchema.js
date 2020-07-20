@@ -3,6 +3,8 @@ var Schema = mongoose.Schema;
 
 var daySchema = new Schema({
     date: Date,
+    // minHour: Date,
+    // maxHour: Date,
     shifts: [{
         startTime: Date,
         endTime: Date,
