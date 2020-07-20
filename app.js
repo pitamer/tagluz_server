@@ -16,7 +16,7 @@ var app = express();
 app.use(cors());
 
 mongoose
-  .connect("mongodb://localhost:27017/testData", {
+  .connect("mongodb://tagluz:NQRs5fq0j6tAgJRJNe0gcdUcqwJ2kBHufxRmzxYQeq4VQW1RYITPxbePz2uGnVI5sF0VmUSvU6J9n3xXADstMA==@tagluz.mongo.cosmos.azure.com:10255/?ssl=true&appName=@tagluz@/test", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -24,7 +24,10 @@ mongoose
     () => {
       console.log("Connected correctly, dudes");
     },
-    (error) => console.log(error)
+    (error, db) => {
+      console.log(error);
+      db.close()
+    }
   );
 
 // view engine setup
@@ -37,9 +40,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
-app.use('/users', usersRouter);
+// app.use("/", indexRouter);
+app.use("/users", usersRouter);
 app.use("/days", daysRouter);
+
+app.use(express.static("./build"));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "build", "index.html"));
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
