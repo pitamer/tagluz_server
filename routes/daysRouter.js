@@ -16,11 +16,14 @@ router.get("/getAll", (req, res, next) => {
 });
 
 router.put("/addShift", (req, res, next) => {
-
   const startOfDay = dateFns.startOfDay(new Date(req.body.day));
   const endOfDay = dateFns.endOfDay(new Date(req.body.day));
 
+  // startOfDay = dateFns.addDays(startOfDay, 1); ////////////////////
+  // endOfDay = dateFns.addDays(endOfDay, 1); ////////////////////
+
   Day.findOneAndUpdate({date: {$gte: startOfDay, $lte: endOfDay}} 
+  // Day.findOneAndUpdate({date: req.body.day} 
     , {$push: {shifts: req.body.newShift}, date: startOfDay}, {upsert: true, setDefaultsOnInsert: true})
     .then((day) => {
       Day.find({}).then((days) => {
@@ -35,6 +38,7 @@ router.put("/addMessage", (req, res, next) => {
   const endOfDay = dateFns.endOfDay(new Date(req.body.day));
 
   Day.findOneAndUpdate({date: {$gte: startOfDay, $lte: endOfDay}} 
+  // Day.findOneAndUpdate({date: req.body.day} 
     , {$push: {messages: req.body.newMessage}, date: startOfDay}, {upsert: true, setDefaultsOnInsert: true})
     .then((day) => {
       Day.find({}).then((days) => {
@@ -49,7 +53,11 @@ router.put("/deleteShift", (req, res, next) => {
   const startOfDay = dateFns.startOfDay(new Date(req.body.day));
   const endOfDay = dateFns.endOfDay(new Date(req.body.day));
 
+  // startOfDay = dateFns.addDays(startOfDay, 1); ////////////////////
+  // endOfDay = dateFns.addDays(endOfDay, 1); ////////////////////
+
   Day.findOneAndUpdate({date: {$gte: startOfDay, $lte: endOfDay}},
+  // Day.findOneAndUpdate({date: req.body.day},
     {$pull: {shifts: {user: req.body.user}}})
   .then(day => {
     Day.find({}).then((days) => {
@@ -57,19 +65,6 @@ router.put("/deleteShift", (req, res, next) => {
     }, (err) => next(err)).catch((err) => console.error(err))
   }, (err) => next(err)).catch((err) => console.error(err))
 })
-
-
-// delShift: action((state, shiftPayload) => {
-//   const user = shiftPayload.user;
-//   const day = shiftPayload.day;
-
-//   for (let dbDay of state.data) {
-//     if (dateFns.isSameDay(dbDay.date, day)) {
-//       dbDay.shifts = dbDay.shifts.filter((shift) => shift.user !== user);
-//     }
-//   }
-// }),
-
 
 router.post("/mkDay", (req, res, next) => {
     Day.create(req.body).then((day) => {
