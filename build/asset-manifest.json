@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.35205e30.chunk.css",
+    "main.css": "/static/css/main.5fedd4a6.chunk.css",
     "main.js": "/static/js/main.0184f2e7.chunk.js",
     "main.js.map": "/static/js/main.0184f2e7.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.e903720a.js",
@@ -8,16 +8,16 @@
     "static/js/2.7ee8a822.chunk.js": "/static/js/2.7ee8a822.chunk.js",
     "static/js/2.7ee8a822.chunk.js.map": "/static/js/2.7ee8a822.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.bb19d37d267d0a544b882148ee6b3378.js": "/precache-manifest.bb19d37d267d0a544b882148ee6b3378.js",
+    "precache-manifest.502d1b69cc5c52665810360b14e0d14f.js": "/precache-manifest.502d1b69cc5c52665810360b14e0d14f.js",
     "service-worker.js": "/service-worker.js",
-    "static/css/main.35205e30.chunk.css.map": "/static/css/main.35205e30.chunk.css.map",
+    "static/css/main.5fedd4a6.chunk.css.map": "/static/css/main.5fedd4a6.chunk.css.map",
     "static/js/2.7ee8a822.chunk.js.LICENSE.txt": "/static/js/2.7ee8a822.chunk.js.LICENSE.txt",
     "static/media/tagforce_logo_and_text_black.jpg": "/static/media/tagforce_logo_and_text_black.d5eefb90.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.e903720a.js",
     "static/js/2.7ee8a822.chunk.js",
-    "static/css/main.35205e30.chunk.css",
+    "static/css/main.5fedd4a6.chunk.css",
     "static/js/main.0184f2e7.chunk.js"
   ]
 }
