@@ -57,7 +57,6 @@ router.put("/deleteShift", (req, res, next) => {
   // endOfDay = dateFns.addDays(endOfDay, 1); ////////////////////
 
   Day.findOneAndUpdate({date: {$gte: startOfDay, $lte: endOfDay}},
-  // Day.findOneAndUpdate({date: req.body.day},
     {$pull: {shifts: {user: req.body.user}}})
   .then(day => {
     Day.find({}).then((days) => {
